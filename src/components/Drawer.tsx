@@ -1,17 +1,33 @@
-import { Drawer } from 'antd';
+import { Drawer, Descriptions } from 'antd';
 import { useDrawerStore } from '@/store/useDrawerStore';
 
-export const ReusableDrawer = () => {
+export interface FieldConfig {
+  key: string;
+  label: string;
+}
+
+interface ReusableDrawerProps {
+  fieldsConfig: FieldConfig[];
+  data?: Record<string, any>;
+}
+
+export const ReusableDrawer = ({ fieldsConfig, data }: ReusableDrawerProps) => {
   const { visible, closeDrawer } = useDrawerStore();
-  
+
   return (
     <Drawer
-      title='Generic drawer'
+      title="Thông tin chi tiết"
       open={visible}
       onClose={closeDrawer}
       width={600}
     >
-        Test
+      <Descriptions column={1} bordered>
+        {fieldsConfig.map((field) => (
+          <Descriptions.Item key={field.key} label={field.label}>
+            {data?.[field.key] ?? '—'}
+          </Descriptions.Item>
+        ))}
+      </Descriptions>
     </Drawer>
   );
 };

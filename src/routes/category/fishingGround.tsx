@@ -3,9 +3,11 @@ import { data } from '@/mockupdata/category/fishingGround';
 import { useSearchStore } from '@/store/useSearchStore';
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Flex, Input, Table } from 'antd';
-import { useEffect } from 'react';
+import { useEffect} from 'react';
 import '@ant-design/v5-patch-for-react-19';
 import { ReusableDrawer } from '@/components/Drawer';
+import { fieldsConfig } from '@/configuration/fieldsConfig/fishingGround';
+import { useDrawerStore } from '@/store/useDrawerStore';
 
 export const Route = createFileRoute('/category/fishingGround')({
   component: RouteComponent,
@@ -13,6 +15,7 @@ export const Route = createFileRoute('/category/fishingGround')({
 
 function RouteComponent() {
   const { searchTerm, filteredData, setSearchTerm, setData } = useSearchStore();
+  const { selectedData } = useDrawerStore();
 
   useEffect(() => {
     setData(data);
@@ -31,7 +34,7 @@ function RouteComponent() {
         <Button type='primary'>Thêm</Button>
       </Flex>
       <Table<DataType> columns={columns} dataSource={filteredData} />
-      <ReusableDrawer />
+      <ReusableDrawer fieldsConfig={fieldsConfig} data={selectedData ?? {}}/>
     </Flex>
   );
 }

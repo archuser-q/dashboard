@@ -10,7 +10,7 @@ export const ActionButton: React.FC<Props> = ({ record }) => {
   const { openDrawer } = useDrawerStore();
 
   const handleClick = () => {
-    openDrawer(); 
+    openDrawer(record); 
   };
 
   return <Button onClick={handleClick}>Xem chi tiết</Button>;
