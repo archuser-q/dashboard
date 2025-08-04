@@ -4,6 +4,7 @@ import { useSearchStore } from '@/store/useSearchStore';
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Flex, Input, Table } from 'antd';
 import { useEffect } from 'react';
+import '@ant-design/v5-patch-for-react-19';
 
 export const Route = createFileRoute('/category/fishingGround')({
   component: RouteComponent,
