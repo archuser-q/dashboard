@@ -1,13 +1,15 @@
-import { Link } from '@tanstack/react-router'
+import { Avatar, Flex } from 'antd'
+import { UserOutlined } from '@ant-design/icons'
 
-export default function Header() {
+export default function CustomHeader() {
   return (
-    <header className="p-2 flex gap-2 bg-white text-black justify-between">
-      <nav className="flex flex-row">
-        <div className="px-2 font-bold">
-          <Link to="/">Home</Link>
-        </div>
-      </nav>
-    </header>
+    <Flex justify='space-between' align='center' style={{width: '100%'}}>
+      <Flex justify='flex-start'>
+        ALON tracker
+      </Flex>
+      <Flex justify='flex-end'>
+        <Avatar icon={<UserOutlined/>} />
+      </Flex>
+    </Flex>
   )
 }
