@@ -33,7 +33,13 @@ function RouteComponent() {
         onChange={(e) => handleSearch(e.target.value)}/>
         <Button type='primary'>Thêm</Button>
       </Flex>
-      <Table<DataType> columns={columns} dataSource={filteredData} />
+      <Table<DataType> 
+        columns={columns} 
+        dataSource={filteredData}
+        pagination={{
+          pageSize: 5,
+          defaultCurrent: 1
+        }} />
       <ReusableDrawer fieldsConfig={fieldsConfig} data={selectedData ?? {}}/>
     </Flex>
   );

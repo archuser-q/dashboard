@@ -1,4 +1,4 @@
-import { Drawer, Descriptions } from 'antd';
+import { Drawer, Descriptions, Space, Button } from 'antd';
 import { useDrawerStore } from '@/store/useDrawerStore';
 
 export interface FieldConfig {
@@ -20,6 +20,14 @@ export const ReusableDrawer = ({ fieldsConfig, data }: ReusableDrawerProps) => {
       open={visible}
       onClose={closeDrawer}
       width={600}
+      extra={
+        <Space>
+          <Button>Sửa</Button>
+          <Button color="danger" variant='solid'>
+            Xóa
+          </Button>
+        </Space>
+      }
     >
       <Descriptions column={1} bordered>
         {fieldsConfig.map((field) => (

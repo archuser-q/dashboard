@@ -26,11 +26,9 @@ export const useSearchStore = create<SearchStore>((set, get) => ({
     
     const filtered = originalData.filter((item) => {
       const searchLower = term.toLowerCase();
-      return (
-        item.key.toString().includes(searchLower) ||
-        item.name.toLowerCase().includes(searchLower) ||
-        item.range.toLowerCase().includes(searchLower)
-      );
+      return Object.values(item)
+        .filter((v) => typeof v === 'string' || typeof v === 'number')
+        .some((v) => v.toString().toLowerCase().includes(searchLower));
     });
     
     set({ filteredData: filtered });
