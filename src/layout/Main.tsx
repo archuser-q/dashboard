@@ -1,6 +1,7 @@
 import { Layout, theme } from "antd";
 import CustomHeader from '@/components/Header';
 import Sidebar from "@/components/Sidebar";
+import { Outlet } from "@tanstack/react-router";
 const { Header, Content, Sider } = Layout;
 
 const Main: React.FC = () => {
@@ -26,7 +27,7 @@ const Main: React.FC = () => {
                         borderRadius: borderRadiusLG,
                         }}
                     >
-                        Content
+                        <Outlet />
                     </Content>
                 </Layout>
             </Layout>
