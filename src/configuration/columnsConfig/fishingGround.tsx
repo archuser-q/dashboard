@@ -1,4 +1,4 @@
-import type { TableProps } from "antd";
+import { Button, type TableProps } from "antd";
 
 export interface DataType{
   key: number;
@@ -9,5 +9,10 @@ export interface DataType{
 export const columns: TableProps<DataType>['columns'] = [
     {title:'Số', dataIndex: 'key', key:'key'},
     {title:'Tên ngư trường',dataIndex:'name',key:'name'},
-    {title:'Phạm vi',dataIndex:'range',key:'range'}
+    {title:'Phạm vi',dataIndex:'range',key:'range'},
+    {title:'Hành động',dataIndex:'action',key:'action',
+      render:(_,record) => (
+        <Button>Xem chi tiết</Button>
+      ) 
+    }
 ]
