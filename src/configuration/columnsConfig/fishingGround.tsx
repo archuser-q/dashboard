@@ -1,5 +1,5 @@
 import { ActionButton } from "@/components/Button";
-import { Button, type TableProps } from "antd";
+import { type TableProps } from "antd";
 
 export interface DataType{
   key: number;
