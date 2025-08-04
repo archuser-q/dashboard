@@ -5,6 +5,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Button, Flex, Input, Table } from 'antd';
 import { useEffect } from 'react';
 import '@ant-design/v5-patch-for-react-19';
+import { ReusableDrawer } from '@/components/Drawer';
 
 export const Route = createFileRoute('/category/fishingGround')({
   component: RouteComponent,
@@ -30,6 +31,7 @@ function RouteComponent() {
         <Button type='primary'>Thêm</Button>
       </Flex>
       <Table<DataType> columns={columns} dataSource={filteredData} />
+      <ReusableDrawer />
     </Flex>
   );
 }

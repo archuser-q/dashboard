@@ -1,3 +1,4 @@
+import { ActionButton } from "@/components/Button";
 import { Button, type TableProps } from "antd";
 
 export interface DataType{
@@ -11,8 +12,6 @@ export const columns: TableProps<DataType>['columns'] = [
     {title:'Tên ngư trường',dataIndex:'name',key:'name'},
     {title:'Phạm vi',dataIndex:'range',key:'range'},
     {title:'Hành động',dataIndex:'action',key:'action',
-      render:(_,record) => (
-        <Button>Xem chi tiết</Button>
-      ) 
+      render: (_, record) => <ActionButton record={record} />
     }
 ]
