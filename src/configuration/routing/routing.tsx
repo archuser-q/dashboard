@@ -7,7 +7,7 @@ export const keyToPathMap: Record<string, string> = {
   '5-1': '/account/local',
   '5-2': '/account/international',
   '6-1': '/category/industry',
-  '6-2': '/category/species',
+  '6-2': '/category/fishSpecies',
   '6-3': '/category/fishingGround',
   '7-1': '/activity/departure',
   '7-2': '/activity/arrival',

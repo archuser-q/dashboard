@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CategoryFishingGroundRouteImport } from './routes/category/fishingGround'
+import { Route as CategoryFishSpeciesRouteImport } from './routes/category/fishSpecies'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -22,30 +23,39 @@ const CategoryFishingGroundRoute = CategoryFishingGroundRouteImport.update({
   path: '/category/fishingGround',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoryFishSpeciesRoute = CategoryFishSpeciesRouteImport.update({
+  id: '/category/fishSpecies',
+  path: '/category/fishSpecies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/category/fishSpecies': typeof CategoryFishSpeciesRoute
   '/category/fishingGround': typeof CategoryFishingGroundRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/category/fishSpecies': typeof CategoryFishSpeciesRoute
   '/category/fishingGround': typeof CategoryFishingGroundRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/category/fishSpecies': typeof CategoryFishSpeciesRoute
   '/category/fishingGround': typeof CategoryFishingGroundRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/category/fishingGround'
+  fullPaths: '/' | '/category/fishSpecies' | '/category/fishingGround'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/category/fishingGround'
-  id: '__root__' | '/' | '/category/fishingGround'
+  to: '/' | '/category/fishSpecies' | '/category/fishingGround'
+  id: '__root__' | '/' | '/category/fishSpecies' | '/category/fishingGround'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoryFishSpeciesRoute: typeof CategoryFishSpeciesRoute
   CategoryFishingGroundRoute: typeof CategoryFishingGroundRoute
 }
 
@@ -65,11 +75,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryFishingGroundRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/fishSpecies': {
+      id: '/category/fishSpecies'
+      path: '/category/fishSpecies'
+      fullPath: '/category/fishSpecies'
+      preLoaderRoute: typeof CategoryFishSpeciesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoryFishSpeciesRoute: CategoryFishSpeciesRoute,
   CategoryFishingGroundRoute: CategoryFishingGroundRoute,
 }
 export const routeTree = rootRouteImport
