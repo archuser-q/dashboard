@@ -10,33 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CategoryFishingGroundRouteImport } from './routes/category/fishingGround'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CategoryFishingGroundRoute = CategoryFishingGroundRouteImport.update({
+  id: '/category/fishingGround',
+  path: '/category/fishingGround',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/category/fishingGround': typeof CategoryFishingGroundRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/category/fishingGround': typeof CategoryFishingGroundRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/category/fishingGround': typeof CategoryFishingGroundRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/category/fishingGround'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/category/fishingGround'
+  id: '__root__' | '/' | '/category/fishingGround'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CategoryFishingGroundRoute: typeof CategoryFishingGroundRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +58,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/category/fishingGround': {
+      id: '/category/fishingGround'
+      path: '/category/fishingGround'
+      fullPath: '/category/fishingGround'
+      preLoaderRoute: typeof CategoryFishingGroundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CategoryFishingGroundRoute: CategoryFishingGroundRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
