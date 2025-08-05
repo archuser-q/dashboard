@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Table, type TableColumnsType, Checkbox, Space, Modal, Button } from 'antd';
+import { Table, type TableColumnsType, Checkbox, Space, Modal, Button, Form, Input, message } from 'antd';
 import { useState } from 'react';
-import { SettingOutlined } from '@ant-design/icons';
+import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
 
 export const Route = createFileRoute('/registrationAndCertificate/harbour')({
   component: RouteComponent,
@@ -40,11 +40,53 @@ const allColumns: ColumnConfig[] = [
   { key: 'ownerPhone', title: 'Điện thoại chủ/giám đốc cảng', dataIndex: 'ownerPhone', visible: true }
 ];
 
+const initialData: DataType[] = [
+  {
+    key: 1,
+    name: 'Cảng Hải An',
+    address: 'Số 12, Đường Nguyễn Văn Linh, Hải Phòng',
+    gpsCoordinate: '20.8449, 106.6881',
+    businessModel: 'Doanh nghiệp tư nhân',
+    nationalID: '0102030405',
+    power: '5000 tấn/năm',
+    referenceCode: 'HA001',
+    ownerName: 'Nguyễn Văn A',
+    ownerPhone: '0901234567'
+  },
+  {
+    key: 2,
+    name: 'Cảng Sài Gòn',
+    address: 'Bến Nhà Rồng, Quận 4, TP. Hồ Chí Minh',
+    gpsCoordinate: '10.7631, 106.7042',
+    businessModel: 'Công ty cổ phần',
+    nationalID: '0203040506',
+    power: '12000 tấn/năm',
+    referenceCode: 'SG002',
+    ownerName: 'Trần Thị B',
+    ownerPhone: '0912345678'
+  },
+  {
+    key: 3,
+    name: 'Cảng Đà Nẵng',
+    address: 'Số 1, Đường Bạch Đằng, Đà Nẵng',
+    gpsCoordinate: '16.0678, 108.2208',
+    businessModel: 'Doanh nghiệp nhà nước',
+    nationalID: '0304050607',
+    power: '8000 tấn/năm',
+    referenceCode: 'DN003',
+    ownerName: 'Lê Văn C',
+    ownerPhone: '0923456789'
+  }
+];
+
 function RouteComponent() {
+  const [data, setData] = useState<DataType[]>(initialData);
   const [columnVisibility, setColumnVisibility] = useState<Record<string, boolean>>(
     allColumns.reduce((acc, col) => ({ ...acc, [col.key]: col.visible }), {})
   );
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isColumnModalVisible, setIsColumnModalVisible] = useState(false);
+  const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [form] = Form.useForm();
 
   const handleColumnVisibilityChange = (columnKey: string, visible: boolean) => {
     setColumnVisibility(prev => ({
@@ -61,16 +103,41 @@ function RouteComponent() {
     setColumnVisibility(newVisibility);
   };
 
-  const showModal = () => {
-    setIsModalVisible(true);
+  const showColumnModal = () => {
+    setIsColumnModalVisible(true);
   };
 
-  const handleOk = () => {
-    setIsModalVisible(false);
+  const handleColumnModalOk = () => {
+    setIsColumnModalVisible(false);
   };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
+  const handleColumnModalCancel = () => {
+    setIsColumnModalVisible(false);
+  };
+
+  const showAddModal = () => {
+    setIsAddModalVisible(true);
+  };
+
+  const handleAddModalOk = async () => {
+    try {
+      const values = await form.validateFields();
+      const newEntry: DataType = {
+        key: data.length > 0 ? Math.max(...data.map(item => item.key)) + 1 : 1,
+        ...values
+      };
+      setData([...data, newEntry]);
+      form.resetFields();
+      setIsAddModalVisible(false);
+      message.success('Thêm thông tin cảng thành công!');
+    } catch (error) {
+      console.error('Validation failed:', error);
+    }
+  };
+
+  const handleAddModalCancel = () => {
+    form.resetFields();
+    setIsAddModalVisible(false);
   };
 
   const visibleColumns: TableColumnsType<DataType> = allColumns
@@ -84,62 +151,31 @@ function RouteComponent() {
   const allSelected = allColumns.every(col => columnVisibility[col.key]);
   const someSelected = allColumns.some(col => columnVisibility[col.key]);
   const visibleColumnCount = Object.values(columnVisibility).filter(Boolean).length;
-  const sampleData: DataType[] = [
-    {
-      key: 1,
-      name: 'Cảng Hải An',
-      address: 'Số 12, Đường Nguyễn Văn Linh, Hải Phòng',
-      gpsCoordinate: '20.8449, 106.6881',
-      businessModel: 'Doanh nghiệp tư nhân',
-      nationalID: '0102030405',
-      power: '5000 tấn/năm',
-      referenceCode: 'HA001',
-      ownerName: 'Nguyễn Văn A',
-      ownerPhone: '0901234567'
-    },
-    {
-      key: 2,
-      name: 'Cảng Sài Gòn',
-      address: 'Bến Nhà Rồng, Quận 4, TP. Hồ Chí Minh',
-      gpsCoordinate: '10.7631, 106.7042',
-      businessModel: 'Công ty cổ phần',
-      nationalID: '0203040506',
-      power: '12000 tấn/năm',
-      referenceCode: 'SG002',
-      ownerName: 'Trần Thị B',
-      ownerPhone: '0912345678'
-    },
-    {
-      key: 3,
-      name: 'Cảng Đà Nẵng',
-      address: 'Số 1, Đường Bạch Đằng, Đà Nẵng',
-      gpsCoordinate: '16.0678, 108.2208',
-      businessModel: 'Doanh nghiệp nhà nước',
-      nationalID: '0304050607',
-      power: '8000 tấn/năm',
-      referenceCode: 'DN003',
-      ownerName: 'Lê Văn C',
-      ownerPhone: '0923456789'
-    }
-  ];
 
   return (
     <div>
       <div style={{ marginBottom: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Button 
           type="primary" 
+          icon={<PlusOutlined />} 
+          onClick={showAddModal}
+        >
+          Thêm mới
+        </Button>
+        <Button 
           icon={<SettingOutlined />} 
-          onClick={showModal}
+          onClick={showColumnModal}
         >
           Tùy chọn cột ({visibleColumnCount}/{allColumns.length})
         </Button>
       </div>
       
+      {/* Column Selection Modal */}
       <Modal
         title="Tùy chọn hiển thị cột"
-        open={isModalVisible}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        open={isColumnModalVisible}
+        onOk={handleColumnModalOk}
+        onCancel={handleColumnModalCancel}
         width={600}
         okText="Đóng"
         cancelButtonProps={{ style: { display: 'none' } }}
@@ -170,10 +206,102 @@ function RouteComponent() {
           </div>
         </Space>
       </Modal>
+
+      {/* Add New Harbor Modal */}
+      <Modal
+        title="Thêm thông tin cảng mới"
+        open={isAddModalVisible}
+        onOk={handleAddModalOk}
+        onCancel={handleAddModalCancel}
+        width={800}
+        okText="Thêm"
+        cancelText="Hủy"
+      >
+        <Form
+          form={form}
+          layout="vertical"
+          name="addHarborForm"
+        >
+          <Form.Item
+            name="name"
+            label="Tên cảng"
+            rules={[{ required: true, message: 'Vui lòng nhập tên cảng!' }]}
+          >
+            <Input placeholder="Nhập tên cảng" />
+          </Form.Item>
+
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
+          >
+            <Input placeholder="Nhập địa chỉ" />
+          </Form.Item>
+
+          <Form.Item
+            name="gpsCoordinate"
+            label="Tọa độ GPS"
+            rules={[{ required: true, message: 'Vui lòng nhập tọa độ GPS!' }]}
+          >
+            <Input placeholder="Ví dụ: 20.8449, 106.6881" />
+          </Form.Item>
+
+          <Form.Item
+            name="businessModel"
+            label="Loại hình"
+            rules={[{ required: true, message: 'Vui lòng nhập loại hình!' }]}
+          >
+            <Input placeholder="Nhập loại hình kinh doanh" />
+          </Form.Item>
+
+          <Form.Item
+            name="nationalID"
+            label="CCCD/Mã số DN"
+            rules={[{ required: true, message: 'Vui lòng nhập CCCD/Mã số DN!' }]}
+          >
+            <Input placeholder="Nhập CCCD hoặc mã số doanh nghiệp" />
+          </Form.Item>
+
+          <Form.Item
+            name="power"
+            label="Công suất khai thác"
+            rules={[{ required: true, message: 'Vui lòng nhập công suất khai thác!' }]}
+          >
+            <Input placeholder="Ví dụ: 5000 tấn/năm" />
+          </Form.Item>
+
+          <Form.Item
+            name="referenceCode"
+            label="Mã chỉ định"
+            rules={[{ required: true, message: 'Vui lòng nhập mã chỉ định!' }]}
+          >
+            <Input placeholder="Nhập mã chỉ định" />
+          </Form.Item>
+
+          <Form.Item
+            name="ownerName"
+            label="Họ tên chủ/giám đốc cảng"
+            rules={[{ required: true, message: 'Vui lòng nhập họ tên chủ/giám đốc cảng!' }]}
+          >
+            <Input placeholder="Nhập họ tên" />
+          </Form.Item>
+
+          <Form.Item
+            name="ownerPhone"
+            label="Điện thoại chủ/giám đốc cảng"
+            rules={[
+              { required: true, message: 'Vui lòng nhập số điện thoại!' },
+              { pattern: /^[0-9]{10,11}$/, message: 'Số điện thoại không hợp lệ!' }
+            ]}
+          >
+            <Input placeholder="Nhập số điện thoại" />
+          </Form.Item>
+        </Form>
+      </Modal>
       
       <Table<DataType> 
         columns={visibleColumns} 
-        dataSource={sampleData}
+        dataSource={data}
         scroll={{ x: 'max-content' }}
         pagination={{ pageSize: 10 }}
       />
