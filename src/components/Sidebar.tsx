@@ -1,7 +1,5 @@
 import { AppstoreOutlined, AuditOutlined, CompassOutlined, SafetyCertificateOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, type MenuProps } from "antd"
-import { useNavigate } from '@tanstack/react-router'
-import { keyToPathMap } from '@/configuration/routing/routing'
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -43,18 +41,10 @@ const items: MenuItem[] = [
 ]
 
 const Sidebar: React.FC = () => {
-    const navigate = useNavigate();
-    const handleClick: MenuProps['onClick'] = ({key})=> {
-        const path = keyToPathMap[key];
-        if (path){
-            navigate({to: path});
-        }
-    }
     return(
         <Menu
         mode="inline"
-        items={items}
-        onClick={handleClick}/>
+        items={items}/>
     );
 }
 
