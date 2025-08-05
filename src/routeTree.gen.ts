@@ -10,33 +10,107 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RegistrationAndCertificateHarbourRouteImport } from './routes/registrationAndCertificate/harbour'
+import { Route as RegistrationAndCertificateRegistrationLocalRouteImport } from './routes/registrationAndCertificate/registration/local'
+import { Route as RegistrationAndCertificateRegistrationInternationalRouteImport } from './routes/registrationAndCertificate/registration/international'
+import { Route as RegistrationAndCertificateCertificateLocalRouteImport } from './routes/registrationAndCertificate/certificate/local'
+import { Route as RegistrationAndCertificateCertificateInternationalRouteImport } from './routes/registrationAndCertificate/certificate/international'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegistrationAndCertificateHarbourRoute =
+  RegistrationAndCertificateHarbourRouteImport.update({
+    id: '/registrationAndCertificate/harbour',
+    path: '/registrationAndCertificate/harbour',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RegistrationAndCertificateRegistrationLocalRoute =
+  RegistrationAndCertificateRegistrationLocalRouteImport.update({
+    id: '/registrationAndCertificate/registration/local',
+    path: '/registrationAndCertificate/registration/local',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RegistrationAndCertificateRegistrationInternationalRoute =
+  RegistrationAndCertificateRegistrationInternationalRouteImport.update({
+    id: '/registrationAndCertificate/registration/international',
+    path: '/registrationAndCertificate/registration/international',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RegistrationAndCertificateCertificateLocalRoute =
+  RegistrationAndCertificateCertificateLocalRouteImport.update({
+    id: '/registrationAndCertificate/certificate/local',
+    path: '/registrationAndCertificate/certificate/local',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const RegistrationAndCertificateCertificateInternationalRoute =
+  RegistrationAndCertificateCertificateInternationalRouteImport.update({
+    id: '/registrationAndCertificate/certificate/international',
+    path: '/registrationAndCertificate/certificate/international',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/registrationAndCertificate/harbour': typeof RegistrationAndCertificateHarbourRoute
+  '/registrationAndCertificate/certificate/international': typeof RegistrationAndCertificateCertificateInternationalRoute
+  '/registrationAndCertificate/certificate/local': typeof RegistrationAndCertificateCertificateLocalRoute
+  '/registrationAndCertificate/registration/international': typeof RegistrationAndCertificateRegistrationInternationalRoute
+  '/registrationAndCertificate/registration/local': typeof RegistrationAndCertificateRegistrationLocalRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/registrationAndCertificate/harbour': typeof RegistrationAndCertificateHarbourRoute
+  '/registrationAndCertificate/certificate/international': typeof RegistrationAndCertificateCertificateInternationalRoute
+  '/registrationAndCertificate/certificate/local': typeof RegistrationAndCertificateCertificateLocalRoute
+  '/registrationAndCertificate/registration/international': typeof RegistrationAndCertificateRegistrationInternationalRoute
+  '/registrationAndCertificate/registration/local': typeof RegistrationAndCertificateRegistrationLocalRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/registrationAndCertificate/harbour': typeof RegistrationAndCertificateHarbourRoute
+  '/registrationAndCertificate/certificate/international': typeof RegistrationAndCertificateCertificateInternationalRoute
+  '/registrationAndCertificate/certificate/local': typeof RegistrationAndCertificateCertificateLocalRoute
+  '/registrationAndCertificate/registration/international': typeof RegistrationAndCertificateRegistrationInternationalRoute
+  '/registrationAndCertificate/registration/local': typeof RegistrationAndCertificateRegistrationLocalRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/registrationAndCertificate/harbour'
+    | '/registrationAndCertificate/certificate/international'
+    | '/registrationAndCertificate/certificate/local'
+    | '/registrationAndCertificate/registration/international'
+    | '/registrationAndCertificate/registration/local'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/registrationAndCertificate/harbour'
+    | '/registrationAndCertificate/certificate/international'
+    | '/registrationAndCertificate/certificate/local'
+    | '/registrationAndCertificate/registration/international'
+    | '/registrationAndCertificate/registration/local'
+  id:
+    | '__root__'
+    | '/'
+    | '/registrationAndCertificate/harbour'
+    | '/registrationAndCertificate/certificate/international'
+    | '/registrationAndCertificate/certificate/local'
+    | '/registrationAndCertificate/registration/international'
+    | '/registrationAndCertificate/registration/local'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RegistrationAndCertificateHarbourRoute: typeof RegistrationAndCertificateHarbourRoute
+  RegistrationAndCertificateCertificateInternationalRoute: typeof RegistrationAndCertificateCertificateInternationalRoute
+  RegistrationAndCertificateCertificateLocalRoute: typeof RegistrationAndCertificateCertificateLocalRoute
+  RegistrationAndCertificateRegistrationInternationalRoute: typeof RegistrationAndCertificateRegistrationInternationalRoute
+  RegistrationAndCertificateRegistrationLocalRoute: typeof RegistrationAndCertificateRegistrationLocalRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +122,56 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/registrationAndCertificate/harbour': {
+      id: '/registrationAndCertificate/harbour'
+      path: '/registrationAndCertificate/harbour'
+      fullPath: '/registrationAndCertificate/harbour'
+      preLoaderRoute: typeof RegistrationAndCertificateHarbourRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registrationAndCertificate/registration/local': {
+      id: '/registrationAndCertificate/registration/local'
+      path: '/registrationAndCertificate/registration/local'
+      fullPath: '/registrationAndCertificate/registration/local'
+      preLoaderRoute: typeof RegistrationAndCertificateRegistrationLocalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registrationAndCertificate/registration/international': {
+      id: '/registrationAndCertificate/registration/international'
+      path: '/registrationAndCertificate/registration/international'
+      fullPath: '/registrationAndCertificate/registration/international'
+      preLoaderRoute: typeof RegistrationAndCertificateRegistrationInternationalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registrationAndCertificate/certificate/local': {
+      id: '/registrationAndCertificate/certificate/local'
+      path: '/registrationAndCertificate/certificate/local'
+      fullPath: '/registrationAndCertificate/certificate/local'
+      preLoaderRoute: typeof RegistrationAndCertificateCertificateLocalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/registrationAndCertificate/certificate/international': {
+      id: '/registrationAndCertificate/certificate/international'
+      path: '/registrationAndCertificate/certificate/international'
+      fullPath: '/registrationAndCertificate/certificate/international'
+      preLoaderRoute: typeof RegistrationAndCertificateCertificateInternationalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RegistrationAndCertificateHarbourRoute:
+    RegistrationAndCertificateHarbourRoute,
+  RegistrationAndCertificateCertificateInternationalRoute:
+    RegistrationAndCertificateCertificateInternationalRoute,
+  RegistrationAndCertificateCertificateLocalRoute:
+    RegistrationAndCertificateCertificateLocalRoute,
+  RegistrationAndCertificateRegistrationInternationalRoute:
+    RegistrationAndCertificateRegistrationInternationalRoute,
+  RegistrationAndCertificateRegistrationLocalRoute:
+    RegistrationAndCertificateRegistrationLocalRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
