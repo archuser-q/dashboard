@@ -1,4 +1,4 @@
-import { AppstoreOutlined, CompassOutlined, SafetyCertificateOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, AuditOutlined, CompassOutlined, SafetyCertificateOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, type MenuProps } from "antd"
 import { useNavigate } from '@tanstack/react-router'
 import { keyToPathMap } from '@/configuration/routing/routing'
@@ -34,7 +34,12 @@ const items: MenuItem[] = [
     },
     {key:'4',label:'Người sử dụng', icon:<UserOutlined/>},
     {key:'5',label:'Nhật ký GPS',icon:<CompassOutlined />},
-    {key:'6',label:'Tài khoản'}
+    {key:'6',label:'Tài khoản',icon:<AuditOutlined />,
+        children:[
+            {key:'6-1',label:'Thông tin tài khoản'},
+            {key:'6-2',label:'Đổi mật khẩu'}
+        ]
+    }
 ]
 
 const Sidebar: React.FC = () => {

@@ -9,12 +9,12 @@ const Main: React.FC = () => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
     return(
-        <Layout style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-            <Header style={{ display: 'flex', alignItems: 'center', background: colorBgContainer }}>
+        <Layout style={{ height: '100vh' }}>
+            <Header style={{ background: colorBgContainer }}>
                 <CustomHeader />
             </Header>
 
-            <Layout style={{ flex: 1, display: 'flex' }}>
+            <Layout>
                 <Sider width={200} style={{ background: colorBgContainer }}>
                     <Sidebar />
                 </Sider>
