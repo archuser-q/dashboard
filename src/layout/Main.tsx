@@ -15,7 +15,10 @@ const Main: React.FC = () => {
             </Header>
 
             <Layout>
-                <Sider width={200} style={{ background: colorBgContainer }}>
+                <Sider width={200} style={{ background: colorBgContainer }}
+                collapsible
+                collapsedWidth={0}
+                breakpoint="lg">
                     <Sidebar />
                 </Sider>
 
