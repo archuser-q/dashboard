@@ -9,6 +9,7 @@ interface FieldConfig {
   name: string;
   label: string;
   type?: string;
+  mode?: string;
   rules?: any[];
   options?: { value: any; label: string }[];
 }
@@ -202,7 +203,10 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
               {field.type === 'date' ? (
                 <DatePicker style={{ width: '100%' }} format="DD/MM/YYYY" />
               ) : field.type === 'select' && field.options ? (
-                <Select style={{ width: '100%' }}>
+                <Select
+                  style={{ width: '100%' }}
+                  mode={field.mode} 
+                >
                   {field.options.map((opt) => (
                     <Select.Option key={opt.value} value={opt.value}>
                       {opt.label}
@@ -221,18 +225,25 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
             <div key={field.name}>
               <Text strong>{field.label}: </Text>
               <Text>
-                {field.type === 'date' && record?.[field.name]
-                  ? (() => {
-                      const dateValue = record[field.name];
-                      if (dayjs.isDayjs(dateValue)) {
-                        return dateValue.format('DD/MM/YYYY');
-                      } else if (typeof dateValue === 'string') {
-                        const parsed = dayjs(dateValue);
-                        return parsed.isValid() ? parsed.format('DD/MM/YYYY') : dateValue;
-                      }
-                      return dateValue || '';
-                    })()
-                  : record?.[field.name] || ''}
+                {(() => {
+                  const value = record?.[field.name];
+                  
+                  // Xử lý kiểu date
+                  if (field.type === 'date') {
+                    const parsed = dayjs(value);
+                    return parsed.isValid() ? parsed.format('DD/MM/YYYY') : value;
+                  }
+
+                  // Xử lý kiểu mảng (multi-select)
+                  if (Array.isArray(value)) {
+                    return value.map((item: string, idx: number) => (
+                      <div key={idx}> - {item}</div>
+                    ));
+                  }
+
+                  // Mặc định
+                  return value || '—';
+                })()}
               </Text>
             </div>
           ))}

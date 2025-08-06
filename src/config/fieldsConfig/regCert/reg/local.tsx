@@ -10,6 +10,7 @@ export const fieldsConfig = [
     name: 'occupation',
     label: 'Ngành nghề khai thác',
     type: 'select',
+    mode: 'multiple', 
     options: [
         { value: 'Khai thác cá nổi', label: 'Khai thác cá nổi' },
         { value: 'Khai thác cá đáy', label: 'Khai thác cá đáy' },
@@ -29,9 +30,9 @@ export const fieldsConfig = [
   { name: 'ownerInfo', label: 'Thông tin chủ tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
   { name: 'ownerNID', label: 'CCCD/Mã số DN chủ tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
   { name: 'ownerPhone', label: 'Số điện thoại chủ tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
-  { name: 'license.licenseNumber', label: 'Số giấy phép', rules: [{required: true, message:'Bắt buộc'}]},
-  { name: 'license.fishType', label: 'Loài cá', rules: [{required: true, message:'Bắt buộc'}]},
-  { name: 'license.fishingGrounds', label:'Ngư trường', rules: [{required: true, message:'Bắt buộc'}]},
-  { name: 'license.seasons', label: 'Mùa vụ', rules: [{required: true, message: 'Bắt buộc'}]},
-  { name: 'license.output', label:'Sản lượng', rules: [{required: true, message: 'Bắt buộc'}]}
+  { name: 'licenseNumber', label: 'Số giấy phép', rules: [{required: true, message:'Bắt buộc'}]},
+  { name: 'fishType', label: 'Loài cá', rules: [{required: true, message:'Bắt buộc'}]},
+  { name: 'fishingGrounds', label:'Ngư trường', rules: [{required: true, message:'Bắt buộc'}]},
+  { name: 'seasons', label: 'Mùa vụ', rules: [{required: true, message: 'Bắt buộc'}]},
+  { name: 'output', label:'Sản lượng', rules: [{required: true, message: 'Bắt buộc'}]}
 ];

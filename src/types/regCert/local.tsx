@@ -1,11 +1,3 @@
-interface License {
-  licenseNumber: string;
-  fishType: string[];
-  fishingGrounds: string;
-  seasons: string;
-  output: string;
-}
-
 export interface DataType {
   key: string;
   boatSymbol: string;
@@ -13,12 +5,16 @@ export interface DataType {
   regisDate: string;
   regisNumber: string;
   regisOffice: string;
-  occupation: string;
+  occupation: string[];
   harbourCode: string;
   inspectDate: string;
   inspectPlace: string;
   ownerInfo: string;
   ownerNID: string;
   ownerPhone: string;
-  license: License;
+  licenseNumber: string;
+  fishType: string[];
+  fishingGrounds: string;
+  seasons: string;
+  output: string;
 }

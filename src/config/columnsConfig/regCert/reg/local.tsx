@@ -29,6 +29,14 @@ export const columns = [
     title: 'Ngành nghề khai thác',
     dataIndex: 'occupation',
     key: 'occupation',
+    render: (value: string[] | string) => {
+        if (Array.isArray(value)) {
+        return value.map((item, index) => (
+            <div key={index}>{item}</div>
+        ));
+        }
+        return value || '—';
+    },
   },
   {
     title: 'Mã cảng',
@@ -64,18 +72,18 @@ export const columns = [
     title: 'Giấy phép khai thác',
     key: 'license',
     render: (_: any, record: DataType) => (
-      <div>
-        <div>Số giấy phép: {record.license.licenseNumber}</div>
         <div>
-            Loài cá:{' '}
-            {Array.isArray(record.license?.fishType)
-                ? record.license.fishType.join(', ')
+            <div>Số giấy phép: {record.licenseNumber}</div>
+            <div>
+                Loài cá:{' '}
+                {Array.isArray(record.fishType)
+                ? record.fishType.join(', ')
                 : '—'}
+            </div>
+            <div>Ngư trường: {record.fishingGrounds}</div>
+            <div>Mùa vụ: {record.seasons}</div>
+            <div>Sản lượng: {record.output}</div>
         </div>
-        <div>Ngư trường: {record.license.fishingGrounds}</div>
-        <div>Mùa vụ: {record.license.seasons}</div>
-        <div>Sản lượng: {record.license.output}</div>
-      </div>
     ),
   },
 ];
