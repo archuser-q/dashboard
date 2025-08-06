@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { createFileRoute } from '@tanstack/react-router'
 import { Button, Flex, Input, Table } from 'antd';
 import CustomDrawer from '@/components/Drawer'; 
-import type { DataType } from '@/types/regCert/local';
+import type { DataType } from '@/types/regCert/reg/local';
 import { sampleData } from '@/mockupdata/regCert/reg/local';
 import { fieldsConfig } from '@/config/fieldsConfig/regCert/reg/local';
 import { columns } from '@/config/columnsConfig/regCert/reg/local';

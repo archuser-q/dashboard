@@ -1,4 +1,4 @@
-import type { DataType } from "@/types/regCert/local";
+import type { DataType } from "@/types/regCert/reg/local";
 
 export const sampleData: DataType[] = [
   {
