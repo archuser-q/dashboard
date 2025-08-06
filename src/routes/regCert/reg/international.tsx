@@ -72,6 +72,7 @@ function RouteComponent() {
       <Table 
         columns={tableColumns} 
         dataSource={data} 
+        scroll={{ x: 'max-content' }}
         pagination={{
           pageSize: 5,
           defaultCurrent: 1

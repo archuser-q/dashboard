@@ -77,6 +77,7 @@ function RouteComponent() {
           pageSize: 5,
           defaultCurrent: 1
         }}
+        scroll={{ x: 'max-content' }}
       />
       <CustomDrawer
         visible={drawerVisible}
