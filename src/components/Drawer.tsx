@@ -39,34 +39,80 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState<boolean>(isAdding);
 
+  // Get all date field names from fieldsConfig - memoize to prevent unnecessary re-renders
+  const dateFields = React.useMemo(() => 
+    fieldsConfig.filter(field => field.type === 'date').map(field => field.name),
+    [fieldsConfig]
+  );
+
   useEffect(() => {
-    if (isAdding) {
-      form.resetFields();
-      form.setFieldsValue(initialValues || {});
-      setIsEditing(true);
-    } else if (record) {
-      const initialValues = { ...record };
-      if (record.thoiGian) {
-        initialValues.thoiGian = dayjs(record.thoiGian);
+    // Only run this effect when the drawer is opened with a new record, not during editing
+    if (visible) {
+      if (isAdding) {
+        form.resetFields();
+        form.setFieldsValue(initialValues || {});
+        setIsEditing(true);
+      } else if (record && !isEditing) {
+        const formValues = { ...record };
+        
+        // Handle all date fields dynamically
+        dateFields.forEach((fieldName) => {
+          if (record[fieldName]) {
+            let parsed;
+            if (dayjs.isDayjs(record[fieldName])) {
+              // If it's already a dayjs object
+              parsed = record[fieldName];
+            } else {
+              // Parse the date string
+              parsed = dayjs(record[fieldName]);
+            }
+            
+            if (parsed && parsed.isValid()) {
+              formValues[fieldName] = parsed;
+            }
+          }
+        });
+        
+        form.setFieldsValue(formValues);
+        setIsEditing(false);
       }
-      form.setFieldsValue(initialValues);
-      setIsEditing(false);
     }
-  }, [isAdding, record, form, initialValues]);
+  }, [visible, isAdding, record, form, initialValues, dateFields]);
 
   const handleEdit = () => {
     setIsEditing(true);
+    
     if (record) {
       const initialValues = { ...record };
-      if (record.thoiGian) {
-        ['thoiGian', 'dob'].forEach((field) => {
-          const raw = record?.[field];
-          const parsed = dayjs(raw, 'DD/MM/YYYY', true);
-          if (parsed.isValid()) {
-            initialValues[field] = parsed;
+      
+      // Handle all date fields dynamically for editing
+      dateFields.forEach((fieldName) => {
+        const raw = record?.[fieldName];
+        
+        if (raw) {
+          // Try different date formats and handle various input types
+          let parsed;
+          if (dayjs.isDayjs(raw)) {
+            // If it's already a dayjs object
+            parsed = raw;
+          } else if (typeof raw === 'string') {
+            // Try parsing as DD/MM/YYYY format first
+            parsed = dayjs(raw, 'DD/MM/YYYY', true);
+            if (!parsed.isValid()) {
+              // Try other common formats
+              parsed = dayjs(raw);
+            }
+          } else {
+            // For other types, try direct parsing
+            parsed = dayjs(raw);
           }
-        });
-      }
+          
+          if (parsed && parsed.isValid()) {
+            initialValues[fieldName] = parsed;
+          }
+        }
+      });
+      
       form.setFieldsValue(initialValues);
     }
   };
@@ -75,9 +121,12 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
     try {
       const values = await form.validateFields();
 
-      if (values.thoiGian) {
-        values.thoiGian = values.thoiGian.format('DD/MM/YYYY');
-      }
+      // Handle all date fields dynamically for saving
+      dateFields.forEach((fieldName) => {
+        if (values[fieldName]) {
+          values[fieldName] = values[fieldName].format('DD/MM/YYYY');
+        }
+      });
 
       if (isAdding) {
         onAdd(values);
@@ -172,8 +221,17 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
             <div key={field.name}>
               <Text strong>{field.label}: </Text>
               <Text>
-                {['thoiGian', 'dob'].includes(field.name) && record?.[field.name]
-                  ? dayjs(record[field.name], 'DD/MM/YYYY').format('DD/MM/YYYY')
+                {field.type === 'date' && record?.[field.name]
+                  ? (() => {
+                      const dateValue = record[field.name];
+                      if (dayjs.isDayjs(dateValue)) {
+                        return dateValue.format('DD/MM/YYYY');
+                      } else if (typeof dateValue === 'string') {
+                        const parsed = dayjs(dateValue);
+                        return parsed.isValid() ? parsed.format('DD/MM/YYYY') : dateValue;
+                      }
+                      return dateValue || '';
+                    })()
                   : record?.[field.name] || ''}
               </Text>
             </div>
