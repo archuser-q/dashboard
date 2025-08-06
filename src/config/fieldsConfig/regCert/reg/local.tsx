@@ -8,7 +8,8 @@ export const fieldsConfig = [
       {value: '<6 m', label:'<6m'},
       {value: '6-12 m', label: '6-12 m'},
       {value: '12-15 m', label: '12-15 m'},
-      {value: '15-24 m', label: '15-24 m'}
+      {value: '15-24 m', label: '15-24 m'},
+      {value: '>24m', label: '>24m'},
     ] 
   },
   { name: 'regisDate', label: 'Ngày đăng ký', type: 'date', rules: [{ required: true, message: 'Bắt buộc' }] },
