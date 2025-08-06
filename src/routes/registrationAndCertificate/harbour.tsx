@@ -1,7 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import { Table, type TableColumnsType, Checkbox, Space, Modal, Button, Form, Input, message } from 'antd';
+import { Table, type TableColumnsType, Checkbox, Space, Modal, Button, Form, Input, message, Descriptions } from 'antd';
 import { useState } from 'react';
-import { SettingOutlined, PlusOutlined } from '@ant-design/icons';
+import { SettingOutlined, PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import '@ant-design/v5-patch-for-react-19';
 
 export const Route = createFileRoute('/registrationAndCertificate/harbour')({
   component: RouteComponent,
@@ -46,7 +47,7 @@ const initialData: DataType[] = [
     name: 'Cảng Hải An',
     address: 'Số 12, Đường Nguyễn Văn Linh, Hải Phòng',
     gpsCoordinate: '20.8449, 106.6881',
-    businessModel: 'Doanh nghiệp tư nhân',
+    businessModel: 'Tư nhân',
     nationalID: '0102030405',
     power: '5000 tấn/năm',
     referenceCode: 'HA001',
@@ -58,7 +59,7 @@ const initialData: DataType[] = [
     name: 'Cảng Sài Gòn',
     address: 'Bến Nhà Rồng, Quận 4, TP. Hồ Chí Minh',
     gpsCoordinate: '10.7631, 106.7042',
-    businessModel: 'Công ty cổ phần',
+    businessModel: 'Cổ phần',
     nationalID: '0203040506',
     power: '12000 tấn/năm',
     referenceCode: 'SG002',
@@ -70,7 +71,7 @@ const initialData: DataType[] = [
     name: 'Cảng Đà Nẵng',
     address: 'Số 1, Đường Bạch Đằng, Đà Nẵng',
     gpsCoordinate: '16.0678, 108.2208',
-    businessModel: 'Doanh nghiệp nhà nước',
+    businessModel: 'Nhà nước',
     nationalID: '0304050607',
     power: '8000 tấn/năm',
     referenceCode: 'DN003',
@@ -86,7 +87,11 @@ function RouteComponent() {
   );
   const [isColumnModalVisible, setIsColumnModalVisible] = useState(false);
   const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+  const [isDetailModalVisible, setIsDetailModalVisible] = useState(false);
+  const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+  const [selectedRecord, setSelectedRecord] = useState<DataType | null>(null);
   const [form] = Form.useForm();
+  const [editForm] = Form.useForm();
 
   const handleColumnVisibilityChange = (columnKey: string, visible: boolean) => {
     setColumnVisibility(prev => ({
@@ -138,6 +143,67 @@ function RouteComponent() {
   const handleAddModalCancel = () => {
     form.resetFields();
     setIsAddModalVisible(false);
+  };
+
+  const handleRowClick = (record: DataType) => {
+    setSelectedRecord(record);
+    setIsDetailModalVisible(true);
+  };
+
+  const handleDetailModalCancel = () => {
+    setIsDetailModalVisible(false);
+    setSelectedRecord(null);
+  };
+
+  const handleEdit = () => {
+    if (selectedRecord) {
+      editForm.setFieldsValue(selectedRecord);
+      setIsDetailModalVisible(false);
+      setIsEditModalVisible(true);
+    }
+  };
+
+  const handleEditModalOk = async () => {
+    try {
+      const values = await editForm.validateFields();
+      const updatedData = data.map(item => 
+        item.key === selectedRecord?.key 
+          ? { ...item, ...values }
+          : item
+      );
+      setData(updatedData);
+      editForm.resetFields();
+      setIsEditModalVisible(false);
+      setSelectedRecord(null);
+      message.success('Cập nhật thông tin cảng thành công!');
+    } catch (error) {
+      console.error('Validation failed:', error);
+    }
+  };
+
+  const handleEditModalCancel = () => {
+    editForm.resetFields();
+    setIsEditModalVisible(false);
+    setSelectedRecord(null);
+  };
+
+  const handleDelete = () => {
+    if (selectedRecord) {
+      Modal.confirm({
+        title: 'Xác nhận xóa',
+        content: `Bạn có chắc chắn muốn xóa cảng "${selectedRecord.name}" không?`,
+        okText: 'Xóa',
+        cancelText: 'Hủy',
+        okType: 'danger',
+        onOk: () => {
+          const filteredData = data.filter(item => item.key !== selectedRecord.key);
+          setData(filteredData);
+          setIsDetailModalVisible(false);
+          setSelectedRecord(null);
+          message.success('Xóa thông tin cảng thành công!');
+        }
+      });
+    }
   };
 
   const visibleColumns: TableColumnsType<DataType> = allColumns
@@ -298,12 +364,152 @@ function RouteComponent() {
           </Form.Item>
         </Form>
       </Modal>
+
+      {/* Detail Modal */}
+      <Modal
+        title="Thông tin chi tiết cảng"
+        open={isDetailModalVisible}
+        onCancel={handleDetailModalCancel}
+        width={800}
+        footer={[
+          <Button key="cancel" onClick={handleDetailModalCancel}>
+            Đóng
+          </Button>,
+          <Button
+            key="edit"
+            type="primary"
+            icon={<EditOutlined />}
+            onClick={handleEdit}
+          >
+            Chỉnh sửa
+          </Button>,
+          <Button
+            key="delete"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={handleDelete}
+          >
+            Xóa
+          </Button>
+        ]}
+      >
+        {selectedRecord && (
+          <Descriptions bordered column={1}>
+            <Descriptions.Item label="Số">{selectedRecord.key}</Descriptions.Item>
+            <Descriptions.Item label="Tên cảng">{selectedRecord.name}</Descriptions.Item>
+            <Descriptions.Item label="Địa chỉ">{selectedRecord.address}</Descriptions.Item>
+            <Descriptions.Item label="Tọa độ GPS">{selectedRecord.gpsCoordinate}</Descriptions.Item>
+            <Descriptions.Item label="Loại hình">{selectedRecord.businessModel}</Descriptions.Item>
+            <Descriptions.Item label="CCCD/Mã số DN">{selectedRecord.nationalID}</Descriptions.Item>
+            <Descriptions.Item label="Công suất khai thác">{selectedRecord.power}</Descriptions.Item>
+            <Descriptions.Item label="Mã chỉ định">{selectedRecord.referenceCode}</Descriptions.Item>
+            <Descriptions.Item label="Họ tên chủ/giám đốc cảng">{selectedRecord.ownerName}</Descriptions.Item>
+            <Descriptions.Item label="Điện thoại chủ/giám đốc cảng">{selectedRecord.ownerPhone}</Descriptions.Item>
+          </Descriptions>
+        )}
+      </Modal>
+
+      {/* Edit Modal */}
+      <Modal
+        title="Chỉnh sửa thông tin cảng"
+        open={isEditModalVisible}
+        onOk={handleEditModalOk}
+        onCancel={handleEditModalCancel}
+        width={800}
+        okText="Cập nhật"
+        cancelText="Hủy"
+      >
+        <Form
+          form={editForm}
+          layout="vertical"
+          name="editHarborForm"
+        >
+          <Form.Item
+            name="name"
+            label="Tên cảng"
+            rules={[{ required: true, message: 'Vui lòng nhập tên cảng!' }]}
+          >
+            <Input placeholder="Nhập tên cảng" />
+          </Form.Item>
+
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
+          >
+            <Input placeholder="Nhập địa chỉ" />
+          </Form.Item>
+
+          <Form.Item
+            name="gpsCoordinate"
+            label="Tọa độ GPS"
+            rules={[{ required: true, message: 'Vui lòng nhập tọa độ GPS!' }]}
+          >
+            <Input placeholder="Ví dụ: 20.8449, 106.6881" />
+          </Form.Item>
+
+          <Form.Item
+            name="businessModel"
+            label="Loại hình"
+            rules={[{ required: true, message: 'Vui lòng nhập loại hình!' }]}
+          >
+            <Input placeholder="Nhập loại hình kinh doanh" />
+          </Form.Item>
+
+          <Form.Item
+            name="nationalID"
+            label="CCCD/Mã số DN"
+            rules={[{ required: true, message: 'Vui lòng nhập CCCD/Mã số DN!' }]}
+          >
+            <Input placeholder="Nhập CCCD hoặc mã số doanh nghiệp" />
+          </Form.Item>
+
+          <Form.Item
+            name="power"
+            label="Công suất khai thác"
+            rules={[{ required: true, message: 'Vui lòng nhập công suất khai thác!' }]}
+          >
+            <Input placeholder="Ví dụ: 5000 tấn/năm" />
+          </Form.Item>
+
+          <Form.Item
+            name="referenceCode"
+            label="Mã chỉ định"
+            rules={[{ required: true, message: 'Vui lòng nhập mã chỉ định!' }]}
+          >
+            <Input placeholder="Nhập mã chỉ định" />
+          </Form.Item>
+
+          <Form.Item
+            name="ownerName"
+            label="Họ tên chủ/giám đốc cảng"
+            rules={[{ required: true, message: 'Vui lòng nhập họ tên chủ/giám đốc cảng!' }]}
+          >
+            <Input placeholder="Nhập họ tên" />
+          </Form.Item>
+
+          <Form.Item
+            name="ownerPhone"
+            label="Điện thoại chủ/giám đốc cảng"
+            rules={[
+              { required: true, message: 'Vui lòng nhập số điện thoại!' },
+              { pattern: /^[0-9]{10,11}$/, message: 'Số điện thoại không hợp lệ!' }
+            ]}
+          >
+            <Input placeholder="Nhập số điện thoại" />
+          </Form.Item>
+        </Form>
+      </Modal>
       
       <Table<DataType> 
         columns={visibleColumns} 
         dataSource={data}
         scroll={{ x: 'max-content' }}
         pagination={{ pageSize: 10 }}
+        onRow={(record) => ({
+          onClick: () => handleRowClick(record),
+          style: { cursor: 'pointer' }
+        })}
       />
     </div>
   );
