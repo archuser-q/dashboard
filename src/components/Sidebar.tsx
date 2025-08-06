@@ -1,4 +1,6 @@
+import { routeMap } from "@/config/routing/routing";
 import { AppstoreOutlined, AuditOutlined, CompassOutlined, SafetyCertificateOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
+import { useRouter } from "@tanstack/react-router";
 import { Menu, type MenuProps } from "antd"
 
 type MenuItem = Required<MenuProps>['items'][number];
@@ -41,10 +43,18 @@ const items: MenuItem[] = [
 ]
 
 const Sidebar: React.FC = () => {
+    const router = useRouter();
+    const handleClick: MenuProps['onClick'] = (e) => {
+        const path = routeMap[e.key];
+        if(path){
+            router.navigate({to:path})
+        }
+    }
     return(
         <Menu
         mode="inline"
-        items={items}/>
+        items={items}
+        onClick={handleClick}/>
     );
 }
 
