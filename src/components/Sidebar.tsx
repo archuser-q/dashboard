@@ -1,48 +1,50 @@
-import { AppstoreOutlined, CompassOutlined, ContactsOutlined, DockerOutlined, HomeOutlined, KubernetesOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import { AppstoreOutlined, AuditOutlined, CompassOutlined, SafetyCertificateOutlined, UserAddOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, type MenuProps } from "antd"
-import { useNavigate } from '@tanstack/react-router'
-import { keyToPathMap } from '@/configuration/routing/routing'
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 const items: MenuItem[] = [
-    {key:'1', label: 'Tổng quan', icon:<HomeOutlined/>},
-    {key:'2', label:'Tàu cá', icon:<DockerOutlined/>, children:[
-        {key:'2-1',label:'Trong nước'},
-        {key:'2-2',label:'Ngoài nước'}
-    ]},
-    {key:'3', label: 'Cảng cá', icon:<KubernetesOutlined />},
-    {key:'4', label:'Danh sách thuyền viên', icon:<ContactsOutlined />},
-    {key:'5', label:'Tài khoản', icon:<UserOutlined />, children:[
-        {key:'5-1',label:'Trong nước'},
-        {key:'5-2',label:'Ngoài nước'}
-    ]},
-    {key:'6', label:'Danh mục', icon:<AppstoreOutlined/>, children:[
-        {key:'6-1',label:'Ngành nghề'},
-        {key:'6-2',label:'Loài cá'},
-        {key:'6-3',label:'Ngư trường'}
-    ]},
-    {key:'7',label:'Hoạt động',icon:<CompassOutlined />,children:[
-        {key:'7-1',label:'Xuất bến'},
-        {key:'7-2',label:'Cập bến'},
-        {key:'7-3',label:'Vị trí'}
-    ]},
-    {key:'8',label:'Đăng xuất', icon: <LogoutOutlined/>}
+    {key:'1',label:'Đăng ký & cấp phép', icon: <SafetyCertificateOutlined/>, 
+        children:[
+            {key:'1-1',label:'Đăng ký',
+                children:[
+                    {key:'1-1-1',label:'Trong nước'},
+                    {key:'1-1-2',label:'Quốc tế'}
+                ]
+            },
+            {key:'1-2',label:'Cấp phép',
+                children:[
+                    {key:'1-2-1',label:'Trong nước'},
+                    {key:'1-2-2',label:'Quốc tế'}
+                ]
+            },
+            {key:'1-3',label:'Cảng'}
+        ]
+    },
+    {key:'2',label:'Thuyền viên', icon:<UserAddOutlined/>},
+    {key:'3',label:'Hoạt động',icon:<AppstoreOutlined />,
+        children:[
+            {key:'3-1',label:'Tàu thuyền'},
+            {key:'3-2',label:'Cảng'},
+            {key:'3-3',label:'Đánh bắt'},
+            {key:'3-4',label:'Bản đồ'}
+        ]
+    },
+    {key:'4',label:'Người sử dụng', icon:<UserOutlined/>},
+    {key:'5',label:'Nhật ký GPS',icon:<CompassOutlined />},
+    {key:'6',label:'Tài khoản',icon:<AuditOutlined />,
+        children:[
+            {key:'6-1',label:'Thông tin tài khoản'},
+            {key:'6-2',label:'Đổi mật khẩu'}
+        ]
+    }
 ]
 
 const Sidebar: React.FC = () => {
-    const navigate = useNavigate();
-    const handleClick: MenuProps['onClick'] = ({key})=> {
-        const path = keyToPathMap[key];
-        if (path){
-            navigate({to: path});
-        }
-    }
     return(
         <Menu
         mode="inline"
-        items={items}
-        onClick={handleClick}/>
+        items={items}/>
     );
 }
 
