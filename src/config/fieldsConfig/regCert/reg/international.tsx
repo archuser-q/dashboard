@@ -1,0 +1,53 @@
+export const fieldsConfig = [
+  { name: 'boatSymbol', label: 'Ký hiệu tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
+  {
+    name: 'boatType',
+    label: 'Loại tàu',
+    type: 'select',
+    options: [
+      { value: '15 m', label: '15 m' },
+      { value: '24 m', label: '24 m' },
+    ],
+    rules: [{ required: true, message: 'Bắt buộc' }],
+  },
+  { name: 'regisDate', label: 'Ngày đăng ký', type: 'date', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'regisOffice', label: 'Cơ quan cấp đăng ký', rules: [{ required: true, message: 'Bắt buộc' }] },
+  {
+    name: 'occupation',
+    label: 'Ngành nghề khai thác',
+    type: 'select',
+    mode: 'multiple',
+    options: [
+      {value:'bien',label:'Khai thác thủy sản biển'},
+      {value:'noiDia',label:'Khai thác thủy sản nội địa'}
+    ],
+    rules: [{ required: true, message: 'Bắt buộc' }],
+  },
+  { name: 'harbourCode', label: 'Mã cảng', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'inspectDate', label: 'Ngày đăng kiểm', type: 'date', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'inspectPlace', label: 'Nơi đăng kiểm', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'ownerInfo', label: 'Thông tin chủ tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'ownerNID', label: 'CCCD chủ tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'ownerPhone', label: 'SĐT chủ tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'captain', label: 'Trưởng tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'captainPassport', label: 'Số hộ chiếu trưởng tàu', rules: [{ required: false }] },
+  { name: 'captainPhone', label: 'SĐT trưởng tàu', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'crewList', label: 'Danh sách thuyền viên', type: 'multi-select', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'licenseNumber', label: 'Số giấy phép', rules: [{ required: true, message: 'Bắt buộc' }] },
+  {
+    name: 'fishType',
+    label: 'Loài cá',
+    type: 'select',
+    mode: 'multiple',
+    options: [
+      { value: 'Cá ngừ', label: 'Cá ngừ' },
+      { value: 'Cá thu', label: 'Cá thu' },
+      { value: 'Cá mực', label: 'Cá mực' },
+      { value: 'Cá nục', label: 'Cá nục' },
+    ],
+    rules: [{ required: true, message: 'Bắt buộc' }],
+  },
+  { name: 'fishingGrounds', label: 'Ngư trường', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'seasons', label: 'Mùa vụ', rules: [{ required: true, message: 'Bắt buộc' }] },
+  { name: 'output', label: 'Sản lượng', rules: [{ required: true, message: 'Bắt buộc' }] },
+];
