@@ -3,12 +3,12 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Button, Flex, Input, Table } from 'antd';
 import { useState } from 'react';
 import CustomDrawer from '@/components/Drawer';
-import { columns } from '@/config/columnsConfig/regCert/reg/international';
-import { fieldsConfig } from '@/config/fieldsConfig/regCert/reg/international';
-import type { DataType } from '@/types/regCert/reg/international';
-import { sampleData } from '@/mockupdata/regCert/reg/international';
+import { columns } from '@/config/columnsConfig/regCert/cert/international';
+import { fieldsConfig } from '@/config/fieldsConfig/regCert/cert/international';
+import type { DataType } from '@/types/regCert/cert/international';
+import { sampleData } from '@/mockupdata/regCert/cert/international';
 
-export const Route = createFileRoute('/regCert/reg/international')({
+export const Route = createFileRoute('/regCert/cert/international')({
   component: RouteComponent,
 })
 
@@ -60,7 +60,6 @@ function RouteComponent() {
       style: { cursor: 'pointer' }
     })
   }));
-
   return (
     <Flex vertical gap={10}>
       <Flex gap={10}>
@@ -71,12 +70,12 @@ function RouteComponent() {
       </Flex>
       <Table 
         columns={tableColumns} 
-        dataSource={data} 
-        scroll={{ x: 'max-content' }}
+        dataSource={data}
         pagination={{
           pageSize: 5,
           defaultCurrent: 1
         }}
+        scroll={{ x: 'max-content' }}
       />
       <CustomDrawer
         visible={drawerVisible}
@@ -89,5 +88,5 @@ function RouteComponent() {
         isAdding={isAdding}
       />
     </Flex>
-  )
+  );
 }
