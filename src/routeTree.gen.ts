@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as GpsJournalRouteImport } from './routes/gpsJournal'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegCertHarbourRouteImport } from './routes/regCert/harbour'
+import { Route as ActivityMapRouteImport } from './routes/activity/map'
 import { Route as RegCertRegLocalRouteImport } from './routes/regCert/reg/local'
 import { Route as RegCertRegInternationalRouteImport } from './routes/regCert/reg/international'
 import { Route as RegCertCertLocalRouteImport } from './routes/regCert/cert/local'
@@ -30,6 +31,11 @@ const IndexRoute = IndexRouteImport.update({
 const RegCertHarbourRoute = RegCertHarbourRouteImport.update({
   id: '/regCert/harbour',
   path: '/regCert/harbour',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivityMapRoute = ActivityMapRouteImport.update({
+  id: '/activity/map',
+  path: '/activity/map',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegCertRegLocalRoute = RegCertRegLocalRouteImport.update({
@@ -57,6 +63,7 @@ const RegCertCertInternationalRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/gpsJournal': typeof GpsJournalRoute
+  '/activity/map': typeof ActivityMapRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/gpsJournal': typeof GpsJournalRoute
+  '/activity/map': typeof ActivityMapRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/gpsJournal': typeof GpsJournalRoute
+  '/activity/map': typeof ActivityMapRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/gpsJournal'
+    | '/activity/map'
     | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/gpsJournal'
+    | '/activity/map'
     | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/gpsJournal'
+    | '/activity/map'
     | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
@@ -115,6 +127,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GpsJournalRoute: typeof GpsJournalRoute
+  ActivityMapRoute: typeof ActivityMapRoute
   RegCertHarbourRoute: typeof RegCertHarbourRoute
   RegCertCertInternationalRoute: typeof RegCertCertInternationalRoute
   RegCertCertLocalRoute: typeof RegCertCertLocalRoute
@@ -143,6 +156,13 @@ declare module '@tanstack/react-router' {
       path: '/regCert/harbour'
       fullPath: '/regCert/harbour'
       preLoaderRoute: typeof RegCertHarbourRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activity/map': {
+      id: '/activity/map'
+      path: '/activity/map'
+      fullPath: '/activity/map'
+      preLoaderRoute: typeof ActivityMapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/regCert/reg/local': {
@@ -179,6 +199,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GpsJournalRoute: GpsJournalRoute,
+  ActivityMapRoute: ActivityMapRoute,
   RegCertHarbourRoute: RegCertHarbourRoute,
   RegCertCertInternationalRoute: RegCertCertInternationalRoute,
   RegCertCertLocalRoute: RegCertCertLocalRoute,
