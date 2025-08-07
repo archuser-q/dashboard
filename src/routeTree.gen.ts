@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as GpsJournalRouteImport } from './routes/gpsJournal'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegCertHarbourRouteImport } from './routes/regCert/harbour'
 import { Route as RegCertRegLocalRouteImport } from './routes/regCert/reg/local'
@@ -16,6 +17,11 @@ import { Route as RegCertRegInternationalRouteImport } from './routes/regCert/re
 import { Route as RegCertCertLocalRouteImport } from './routes/regCert/cert/local'
 import { Route as RegCertCertInternationalRouteImport } from './routes/regCert/cert/international'
 
+const GpsJournalRoute = GpsJournalRouteImport.update({
+  id: '/gpsJournal',
+  path: '/gpsJournal',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -50,6 +56,7 @@ const RegCertCertInternationalRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/gpsJournal': typeof GpsJournalRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/gpsJournal': typeof GpsJournalRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
@@ -67,6 +75,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/gpsJournal': typeof GpsJournalRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/gpsJournal'
     | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/gpsJournal'
     | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/gpsJournal'
     | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  GpsJournalRoute: typeof GpsJournalRoute
   RegCertHarbourRoute: typeof RegCertHarbourRoute
   RegCertCertInternationalRoute: typeof RegCertCertInternationalRoute
   RegCertCertLocalRoute: typeof RegCertCertLocalRoute
@@ -111,6 +124,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/gpsJournal': {
+      id: '/gpsJournal'
+      path: '/gpsJournal'
+      fullPath: '/gpsJournal'
+      preLoaderRoute: typeof GpsJournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  GpsJournalRoute: GpsJournalRoute,
   RegCertHarbourRoute: RegCertHarbourRoute,
   RegCertCertInternationalRoute: RegCertCertInternationalRoute,
   RegCertCertLocalRoute: RegCertCertLocalRoute,
