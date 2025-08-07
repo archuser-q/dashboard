@@ -158,7 +158,7 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
 
   return (
     <Drawer
-      title={isAdding ? 'Adding Data' : isEditing ? 'Edit Data' : 'Detail Data'}
+      title={isAdding ? 'Thêm' : isEditing ? 'Sửa' : 'Thông tin chi tiết'}
       width={400}
       onClose={onClose}
       open={visible}
