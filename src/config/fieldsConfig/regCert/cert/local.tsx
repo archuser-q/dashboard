@@ -1,9 +1,10 @@
 import { sampleData as registeredBoats } from '@/mockupdata/regCert/reg/local';
 
 export const fieldsConfig = [
+    {name:'boatCode', label:'Mã tàu', rules: [{ required: true, message: 'Bắt buộc' }]},
     {
-        name: 'boatCode',
-        label: 'Mã tàu',
+        name: 'boatCodeReference',
+        label: 'Ký hiệu tàu',
         type: 'select',
         options: registeredBoats.map(boat => ({
             label: `${boat.boatSymbol}`,

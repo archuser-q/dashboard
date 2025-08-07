@@ -166,9 +166,9 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
         <Space style={{ width: '100%', justifyContent: 'space-between' }}>
           {isEditing ? (
             <>
-              <Button onClick={handleCancel}>Cancel</Button>
+              <Button onClick={handleCancel}>Hủy</Button>
               <Button type="primary" onClick={handleSave}>
-                Save
+                Lưu
               </Button>
             </>
           ) : (
@@ -180,11 +180,11 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
                 cancelText="Cancel"
               >
                 <Button danger icon={<DeleteOutlined />}>
-                  Delete
+                  Xóa
                 </Button>
               </Popconfirm>
               <Button type="primary" icon={<EditOutlined />} onClick={handleEdit}>
-                Edit
+                Sửa
               </Button>
             </>
           )}
