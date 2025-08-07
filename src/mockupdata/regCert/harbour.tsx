@@ -1,0 +1,40 @@
+import type { DataType } from "@/types/regCert/harbour";
+
+export const sampleData: DataType[] = [
+  {
+    key: '1',
+    name: 'Công ty TNHH Năng Lượng Xanh',
+    address: '123 Đường Lê Lợi, Quận 1, TP.HCM',
+    GPS: '10.7769,106.7009',
+    businessModel: 'Nhà nước',
+    nid: 'NID001',
+    power: 50,
+    identCode: 'ID-001-A',
+    ownerName: 'Nguyễn Văn A',
+    ownerPhone: '0909123456',
+  },
+  {
+    key: '2',
+    name: 'Hợp tác xã Năng lượng Miền Trung',
+    address: '45 Trần Phú, TP. Đà Nẵng',
+    GPS: '16.0544,108.2022',
+    businessModel: 'Tư nhân',
+    nid: 'NID002',
+    power: 120,
+    identCode: 'ID-002-B',
+    ownerName: 'Trần Thị B',
+    ownerPhone: '0912345678',
+  },
+  {
+    key: '3',
+    name: 'SolarTech Việt Nam',
+    address: '88 Nguyễn Trãi, Hà Nội',
+    GPS: '21.0285,105.8542',
+    businessModel: 'Nhà nước',
+    nid: 'NID003',
+    power: 75,
+    identCode: 'ID-003-C',
+    ownerName: 'Lê Văn C',
+    ownerPhone: '0987654321',
+  },
+];

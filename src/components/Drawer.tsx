@@ -26,7 +26,7 @@ interface CarbonDrawerProps {
   initialValues?: any;
 }
 
-const CarbonDrawer: React.FC<CarbonDrawerProps> = ({ 
+const CustomDrawer: React.FC<CarbonDrawerProps> = ({ 
   visible, 
   onClose, 
   record, 
@@ -253,4 +253,4 @@ const CarbonDrawer: React.FC<CarbonDrawerProps> = ({
   );
 };
 
-export default CarbonDrawer;
+export default CustomDrawer;

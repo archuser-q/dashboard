@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RegCertHarbourRouteImport } from './routes/regCert/harbour'
 import { Route as RegCertRegLocalRouteImport } from './routes/regCert/reg/local'
 import { Route as RegCertRegInternationalRouteImport } from './routes/regCert/reg/international'
 import { Route as RegCertCertLocalRouteImport } from './routes/regCert/cert/local'
@@ -18,6 +19,11 @@ import { Route as RegCertCertInternationalRouteImport } from './routes/regCert/c
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegCertHarbourRoute = RegCertHarbourRouteImport.update({
+  id: '/regCert/harbour',
+  path: '/regCert/harbour',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegCertRegLocalRoute = RegCertRegLocalRouteImport.update({
@@ -44,6 +50,7 @@ const RegCertCertInternationalRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
   '/regCert/reg/international': typeof RegCertRegInternationalRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
   '/regCert/reg/international': typeof RegCertRegInternationalRoute
@@ -59,6 +67,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
   '/regCert/cert/local': typeof RegCertCertLocalRoute
   '/regCert/reg/international': typeof RegCertRegInternationalRoute
@@ -68,6 +77,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
     | '/regCert/reg/international'
@@ -75,6 +85,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
     | '/regCert/reg/international'
@@ -82,6 +93,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/regCert/harbour'
     | '/regCert/cert/international'
     | '/regCert/cert/local'
     | '/regCert/reg/international'
@@ -90,6 +102,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RegCertHarbourRoute: typeof RegCertHarbourRoute
   RegCertCertInternationalRoute: typeof RegCertCertInternationalRoute
   RegCertCertLocalRoute: typeof RegCertCertLocalRoute
   RegCertRegInternationalRoute: typeof RegCertRegInternationalRoute
@@ -103,6 +116,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regCert/harbour': {
+      id: '/regCert/harbour'
+      path: '/regCert/harbour'
+      fullPath: '/regCert/harbour'
+      preLoaderRoute: typeof RegCertHarbourRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/regCert/reg/local': {
@@ -138,6 +158,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RegCertHarbourRoute: RegCertHarbourRoute,
   RegCertCertInternationalRoute: RegCertCertInternationalRoute,
   RegCertCertLocalRoute: RegCertCertLocalRoute,
   RegCertRegInternationalRoute: RegCertRegInternationalRoute,
