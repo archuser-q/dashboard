@@ -1,6 +1,6 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { createFileRoute } from '@tanstack/react-router'
-import { Button, Flex, Input, Table } from 'antd';
+import { PlusOutlined,SettingOutlined} from '@ant-design/icons';
+import { createFileRoute } from '@tanstack/react-router';
+import { Button,Flex,Input,Table,Checkbox,Card,Popover} from 'antd';
 import { useState } from 'react';
 import CustomDrawer from '@/components/Drawer';
 import { columns } from '@/config/columnsConfig/regCert/reg/international';
@@ -10,13 +10,17 @@ import { sampleData } from '@/mockupdata/regCert/reg/international';
 
 export const Route = createFileRoute('/regCert/reg/international')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   const [data, setData] = useState<DataType[]>(sampleData);
   const [drawerVisible, setDrawerVisible] = useState<boolean>(false);
   const [selectedRecord, setSelectedRecord] = useState<DataType | undefined>(undefined);
   const [isAdding, setIsAdding] = useState<boolean>(false);
+
+  // Column visibility state
+  const defaultCheckedList = columns.map((item) => item.key || item.dataIndex as string);
+  const [checkedList, setCheckedList] = useState<string[]>(defaultCheckedList);
 
   const handleRowClick = (record: DataType) => {
     setSelectedRecord(record);
@@ -53,31 +57,61 @@ function RouteComponent() {
     setData(data.filter(item => item.key !== key));
   };
 
-  const tableColumns = columns.map(col => ({
-    ...col,
-    onCell: (record: DataType) => ({
-      onClick: () => handleRowClick(record),
-      style: { cursor: 'pointer' }
-    })
+  // Checkbox options for column visibility
+  const options = columns.map(({ key, dataIndex, title }) => ({
+    label: title,
+    value: key || dataIndex as string,
   }));
+
+  // Filter columns based on checkedList
+  const visibleColumns = columns
+    .filter(col => checkedList.includes(col.key || col.dataIndex as string))
+    .map(col => ({
+      ...col,
+      onCell: (record: DataType) => ({
+        onClick: () => handleRowClick(record),
+        style: { cursor: 'pointer' }
+      })
+    }));
+
+  // Dropdown content
+  const dropdownContent = (
+    <Card style={{ width: 240 }}>
+      <Checkbox.Group
+        value={checkedList}
+        options={options}
+        onChange={(value) => setCheckedList(value as string[])}
+      />
+    </Card>
+  );
 
   return (
     <Flex vertical gap={10}>
-      <Flex gap={10}>
+      <Flex gap={10} justify="space-between">
         <Input.Search placeholder="Tìm kiếm" variant="filled" />
-        <Button type='primary' onClick={handleAddClick}>
+        <Popover
+          placement="bottomRight"
+          content={dropdownContent}
+          trigger="click"
+        >
+          <Button icon={<SettingOutlined />} shape="round" />
+        </Popover>
+        <Button type='primary' onClick={handleAddClick} shape='round'>
           <PlusOutlined />
         </Button>
       </Flex>
+
       <Table 
-        columns={tableColumns} 
+        columns={visibleColumns} 
         dataSource={data} 
         scroll={{ x: 'max-content' }}
         pagination={{
           pageSize: 5,
           defaultCurrent: 1
         }}
+        style={{ marginTop: 24 }}
       />
+
       <CustomDrawer
         visible={drawerVisible}
         onClose={handleDrawerClose}
@@ -89,5 +123,5 @@ function RouteComponent() {
         isAdding={isAdding}
       />
     </Flex>
-  )
+  );
 }
