@@ -4,4 +4,5 @@ export const routeMap: Record<string, string> = {
     '1-2-1': '/regCert/cert/local',
     '1-2-2': '/regCert/cert/international',
     '1-3': '/regCert/harbour',
+    '5': '/gpsJournal',
 }

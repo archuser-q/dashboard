@@ -7,6 +7,7 @@ import { routeTree } from './routeTree.gen'
 
 import './styles.css'
 import reportWebVitals from './reportWebVitals.ts'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 // Create a new router instance
 const router = createRouter({
@@ -26,12 +27,15 @@ declare module '@tanstack/react-router' {
 }
 
 // Render the app
+const queryClient = new QueryClient();
 const rootElement = document.getElementById('app')
 if (rootElement && !rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </StrictMode>,
   )
 }
