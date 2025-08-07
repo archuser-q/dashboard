@@ -13,6 +13,7 @@ import { Route as GpsJournalRouteImport } from './routes/gpsJournal'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RegCertHarbourRouteImport } from './routes/regCert/harbour'
 import { Route as ActivityMapRouteImport } from './routes/activity/map'
+import { Route as ActivityActiveBoatRouteImport } from './routes/activity/activeBoat'
 import { Route as RegCertRegLocalRouteImport } from './routes/regCert/reg/local'
 import { Route as RegCertRegInternationalRouteImport } from './routes/regCert/reg/international'
 import { Route as RegCertCertLocalRouteImport } from './routes/regCert/cert/local'
@@ -36,6 +37,11 @@ const RegCertHarbourRoute = RegCertHarbourRouteImport.update({
 const ActivityMapRoute = ActivityMapRouteImport.update({
   id: '/activity/map',
   path: '/activity/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivityActiveBoatRoute = ActivityActiveBoatRouteImport.update({
+  id: '/activity/activeBoat',
+  path: '/activity/activeBoat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RegCertRegLocalRoute = RegCertRegLocalRouteImport.update({
@@ -63,6 +69,7 @@ const RegCertCertInternationalRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/gpsJournal': typeof GpsJournalRoute
+  '/activity/activeBoat': typeof ActivityActiveBoatRoute
   '/activity/map': typeof ActivityMapRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/gpsJournal': typeof GpsJournalRoute
+  '/activity/activeBoat': typeof ActivityActiveBoatRoute
   '/activity/map': typeof ActivityMapRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/gpsJournal': typeof GpsJournalRoute
+  '/activity/activeBoat': typeof ActivityActiveBoatRoute
   '/activity/map': typeof ActivityMapRoute
   '/regCert/harbour': typeof RegCertHarbourRoute
   '/regCert/cert/international': typeof RegCertCertInternationalRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/gpsJournal'
+    | '/activity/activeBoat'
     | '/activity/map'
     | '/regCert/harbour'
     | '/regCert/cert/international'
@@ -106,6 +116,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/gpsJournal'
+    | '/activity/activeBoat'
     | '/activity/map'
     | '/regCert/harbour'
     | '/regCert/cert/international'
@@ -116,6 +127,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/gpsJournal'
+    | '/activity/activeBoat'
     | '/activity/map'
     | '/regCert/harbour'
     | '/regCert/cert/international'
@@ -127,6 +139,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   GpsJournalRoute: typeof GpsJournalRoute
+  ActivityActiveBoatRoute: typeof ActivityActiveBoatRoute
   ActivityMapRoute: typeof ActivityMapRoute
   RegCertHarbourRoute: typeof RegCertHarbourRoute
   RegCertCertInternationalRoute: typeof RegCertCertInternationalRoute
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ActivityMapRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/activity/activeBoat': {
+      id: '/activity/activeBoat'
+      path: '/activity/activeBoat'
+      fullPath: '/activity/activeBoat'
+      preLoaderRoute: typeof ActivityActiveBoatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/regCert/reg/local': {
       id: '/regCert/reg/local'
       path: '/regCert/reg/local'
@@ -199,6 +219,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   GpsJournalRoute: GpsJournalRoute,
+  ActivityActiveBoatRoute: ActivityActiveBoatRoute,
   ActivityMapRoute: ActivityMapRoute,
   RegCertHarbourRoute: RegCertHarbourRoute,
   RegCertCertInternationalRoute: RegCertCertInternationalRoute,
