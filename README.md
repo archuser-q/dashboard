@@ -64,16 +64,19 @@ Once you've completed the installation steps above, you can start developing:
 ```
 dashboard/
 ├── src/
-│   ├── components/      # Reusable UI components
-│   ├── routes/         # TanStack Router routes
-│   ├── hooks/          # Custom React hooks
-│   ├── services/       # API services with TanStack Query
-│   ├── utils/          # Helper functions
-│   ├── types/          # TypeScript type definitions
-│   └── main.tsx        # Application entry point
-├── public/             # Static assets
-├── package.json        # Dependencies and scripts
-└── README.md          # This file
+│   ├── components/         # Reusable components
+│   ├── config/            # Columns and Drawer's field configuration, routing configuration
+│   ├── layout/            # Main layout of the app
+│   ├── mockupdata/        # Data for other components retrieving and displaying
+│   ├── types/             # Data types for each component
+│   ├── logo.svg           # Application logo
+│   ├── main.tsx           # Application entry point
+│   ├── reportWebVitals.tsx # Performance monitoring
+│   ├── routeGenTree       # Route generation tree
+│   └── styles.css         # Global styles
+├── public/                # Static assets
+├── package.json           # Dependencies and scripts
+└── README.md             # This file
 ```
 
 ## 🛠️ Technologies Used
@@ -110,9 +113,7 @@ export const Route = createRootRoute({
 })
 ```
 
-## TanStack Query Usage
-
-Example TanStack Query usage:
+### TanStack Query Example:
 
 ```typescript
 import { useQuery } from '@tanstack/react-query'
@@ -130,41 +131,52 @@ function UserProfile({ userId }: { userId: string }) {
 }
 ```
 
-## Troubleshooting
+## 🐛 Troubleshooting
 
-### Common Issues:
+### Common Issues & Solutions:
 
-1. **Port already in use:**
-   ```bash
-   Error: listen EADDRINUSE: address already in use :::5173
-   ```
-   Solution: Change port in `vite.config.ts` or kill the process using the port.
+#### Port Already in Use
+```bash
+Error: listen EADDRINUSE: address already in use :::3000
+```
+**Solution:** Kill the process using port 3000:
+```bash
+# Find process using port 3000
+lsof -ti:3000
 
-2. **Incompatible Node version:**
-   ```bash
-   npm ERR! engine Unsupported engine
-   ```
-   Solution: Update Node.js to version >= 18.0.0
+# Kill the process
+kill -9 $(lsof -ti:3000)
+```
 
-3. **Module not found:**
-   ```bash
-   Cannot resolve module '@tanstack/react-router'
-   ```
-   Solution: Delete `node_modules` and reinstall:
-   ```bash
-   rm -rf node_modules package-lock.json
-   npm install
-   ```
+#### Node Version Issues
+```bash
+npm ERR! engine Unsupported engine
+```
+**Solution:** Update Node.js to version >= 18.0.0:
+```bash
+# Check current version
+node --version
 
-## Development Tools
+# Update using nvm (recommended)
+nvm install 18
+nvm use 18
+```
 
-- **TanStack Router Devtools**: Automatically displays in development mode
-- **TanStack Query Devtools**: Debug queries and mutations
-- **TypeScript**: Type checking
-- **ESLint**: Code linting
-- **Prettier**: Code formatting
+#### Module Not Found
+```bash
+Cannot resolve module '@tanstack/react-router'
+```
+**Solution:** Clear cache and reinstall:
+```bash
+# Clear npm cache
+npm cache clean --force
 
-## Deployment
+# Remove node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+```
+
+## 🚢 Deployment
 
 ### Vercel:
 ```bash
