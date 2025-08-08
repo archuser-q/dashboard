@@ -63,20 +63,28 @@ Once you've completed the installation steps above, you can start developing:
 
 ```
 dashboard/
-├── src/
-│   ├── components/         # Reusable components
-│   ├── config/            # Columns and Drawer's field configuration, routing configuration
-│   ├── layout/            # Main layout of the app
-│   ├── mockupdata/        # Data for other components retrieving and displaying
-│   ├── types/             # Data types for each component
-│   ├── logo.svg           # Application logo
-│   ├── main.tsx           # Application entry point
-│   ├── reportWebVitals.tsx # Performance monitoring
-│   ├── routeGenTree       # Route generation tree
-│   └── styles.css         # Global styles
+├── .vscode/               # VS Code workspace settings
 ├── public/                # Static assets
-├── package.json           # Dependencies and scripts
-└── README.md             # This file
+├── src/
+│   ├── components/        # Reusable components
+│   ├── config/           # Columns and Drawer's field configuration, routing configuration
+│   ├── layout/           # Main layout of the app
+│   ├── mockupdata/       # Data for other components retrieving and displaying
+│   ├── types/            # Data types for each component
+│   ├── logo.svg          # Application logo
+│   ├── main.tsx          # Application entry point
+│   ├── reportWebVitals.tsx # Performance monitoring
+│   ├── routeGenTree      # Route generation tree
+│   └── styles.css        # Global styles
+├── .cta.json             # CTA configuration
+├── .gitignore            # Git ignore rules
+├── biome.json            # Biome linter/formatter configuration
+├── index.html            # HTML entry point
+├── package-lock.json     # NPM dependency lock file
+├── package.json          # Dependencies and scripts
+├── README.md             # This file
+├── tsconfig.json         # TypeScript configuration
+└── vite.config.ts        # Vite build configuration
 ```
 
 ## 🛠️ Technologies Used
