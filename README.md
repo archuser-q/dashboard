@@ -60,7 +60,6 @@ Once you've completed the installation steps above, you can start developing:
 4. **Hot Reload**: Changes will automatically reload in the browser
 
 ## 📁 Project Structure
-
 ```
 dashboard/
 ├── .vscode/               # VS Code workspace settings
@@ -70,6 +69,7 @@ dashboard/
 │   ├── config/           # Columns and Drawer's field configuration, routing configuration
 │   ├── layout/           # Main layout of the app
 │   ├── mockupdata/       # Data for other components retrieving and displaying
+│   ├── routes/           # Route components and page definitions
 │   ├── types/            # Data types for each component
 │   ├── logo.svg          # Application logo
 │   ├── main.tsx          # Application entry point
@@ -85,6 +85,7 @@ dashboard/
 ├── README.md             # This file
 ├── tsconfig.json         # TypeScript configuration
 └── vite.config.ts        # Vite build configuration
+
 ```
 
 ## 🛠️ Technologies Used
