@@ -185,41 +185,6 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-## 🚢 Deployment
-
-### Vercel:
-```bash
-npm run build
-vercel --prod
-```
-
-### Netlify:
-```bash
-npm run build
-netlify deploy --prod --dir=dist
-```
-
-### Docker:
-```bash
-# Build Docker image
-docker build -t tanstack-app .
-
-# Run container
-docker run -p 3000:3000 tanstack-app
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a new branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Create a Pull Request
-
-## License
-
-MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Support
 
 - [TanStack Router Documentation](https://tanstack.com/router)
