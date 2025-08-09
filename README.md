@@ -92,7 +92,7 @@ dashboard/
 
 - **[TanStack Router](https://tanstack.com/router)** - Type-safe router for React
 - **[TanStack Query](https://tanstack.com/query)** - Powerful data synchronization for React
-- **[React](https://reactjs.org/)** - UI library
+- **[React](https://reactjs.org/) + [Ant design](https://ant.design/)** - UI library
 - **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript
 - **[Vite](https://vitejs.dev/)** - Fast build tool
 
